@@ -4,20 +4,802 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TEC_QA_CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="TEC_QA_CRMModelStoreContainer" />
+      <Schema Namespace="TEC_QA_CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CorporateRepresentatives">
+          <Key>
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="CorporationID" />
+          </Key>
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="CorporationID" Type="int" Nullable="false" />
+          <Property Name="RoleDescription" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Corporations">
+          <Key>
+            <PropertyRef Name="CorporationID" />
+          </Key>
+          <Property Name="CorporationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CorporationsPhoneNumbers">
+          <Key>
+            <PropertyRef Name="CorporationID" />
+            <PropertyRef Name="PhoneNumber" />
+          </Key>
+          <Property Name="CorporationID" Type="int" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ErrorReports">
+          <Key>
+            <PropertyRef Name="ErrorID" />
+          </Key>
+          <Property Name="ErrorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="SaleID" Type="int" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ErrorDate" Type="date" />
+          <Property Name="ContactMail" Type="nvarchar" MaxLength="100" />
+          <Property Name="ErrorDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PersonsPhoneNumbers">
+          <Key>
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="PhoneNumber" />
+          </Key>
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReviewPetitions">
+          <Key>
+            <PropertyRef Name="PetitionID" />
+          </Key>
+          <Property Name="PetitionID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="ReviewDate" Type="datetime2" Precision="4" Nullable="false" />
+          <Property Name="SaleID" Type="int" />
+          <Property Name="State" Type="bit" />
+          <Property Name="Observations" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="Date" Type="datetime2" Precision="4" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SalesPetitions">
+          <Key>
+            <PropertyRef Name="PetitionID" />
+          </Key>
+          <Property Name="PetitionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime2" Precision="4" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="64" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="UsersSession">
+          <Key>
+            <PropertyRef Name="SessionID" />
+          </Key>
+          <Property Name="SessionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ActiveSession" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="datetime2" Precision="4" Nullable="false" />
+          <Property Name="FinishDate" Type="datetime2" Precision="4" Nullable="false" />
+          <Property Name="SessionIP" Type="binary" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ErrorRepo__SaleI__4222D4EF">
+          <End Role="Sales" Type="Self.Sales" Multiplicity="0..1" />
+          <End Role="ErrorReports" Type="Self.ErrorReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="ErrorReports">
+              <PropertyRef Name="SaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ErrorRepo__UserI__412EB0B6">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="ErrorReports" Type="Self.ErrorReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ErrorReports">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApprovedPetitions_SalesPetitions">
+          <End Role="SalesPetitions" Type="Self.SalesPetitions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReviewPetitions" Type="Self.ReviewPetitions" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SalesPetitions">
+              <PropertyRef Name="PetitionID" />
+            </Principal>
+            <Dependent Role="ReviewPetitions">
+              <PropertyRef Name="PetitionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporateRepresentatives_Corporations">
+          <End Role="Corporations" Type="Self.Corporations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CorporateRepresentatives" Type="Self.CorporateRepresentatives" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporations">
+              <PropertyRef Name="CorporationID" />
+            </Principal>
+            <Dependent Role="CorporateRepresentatives">
+              <PropertyRef Name="CorporationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporateRepresentatives_Persons">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CorporateRepresentatives" Type="Self.CorporateRepresentatives" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="CorporateRepresentatives">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporationsPhoneNumbers_Corporations">
+          <End Role="Corporations" Type="Self.Corporations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CorporationsPhoneNumbers" Type="Self.CorporationsPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporations">
+              <PropertyRef Name="CorporationID" />
+            </Principal>
+            <Dependent Role="CorporationsPhoneNumbers">
+              <PropertyRef Name="CorporationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonsPhoneNumbers_Persons">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonsPhoneNumbers" Type="Self.PersonsPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="PersonsPhoneNumbers">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewPetitions_Persons">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="ReviewPetitions" Type="Self.ReviewPetitions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="ReviewPetitions">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewPetitions_Sales">
+          <End Role="Sales" Type="Self.Sales" Multiplicity="0..1" />
+          <End Role="ReviewPetitions" Type="Self.ReviewPetitions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="ReviewPetitions">
+              <PropertyRef Name="SaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesPetitions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="SalesPetitions" Type="Self.SalesPetitions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SalesPetitions">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSession_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UsersSession" Type="Self.UsersSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersSession">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TEC_QA_CRMModelStoreContainer">
+          <EntitySet Name="CorporateRepresentatives" EntityType="Self.CorporateRepresentatives" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CorporationsPhoneNumbers" EntityType="Self.CorporationsPhoneNumbers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErrorReports" EntityType="Self.ErrorReports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonsPhoneNumbers" EntityType="Self.PersonsPhoneNumbers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReviewPetitions" EntityType="Self.ReviewPetitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesPetitions" EntityType="Self.SalesPetitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersSession" EntityType="Self.UsersSession" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ErrorRepo__SaleI__4222D4EF" Association="Self.FK__ErrorRepo__SaleI__4222D4EF">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="ErrorReports" EntitySet="ErrorReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ErrorRepo__UserI__412EB0B6" Association="Self.FK__ErrorRepo__UserI__412EB0B6">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ErrorReports" EntitySet="ErrorReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApprovedPetitions_SalesPetitions" Association="Self.FK_ApprovedPetitions_SalesPetitions">
+            <End Role="SalesPetitions" EntitySet="SalesPetitions" />
+            <End Role="ReviewPetitions" EntitySet="ReviewPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporateRepresentatives_Corporations" Association="Self.FK_CorporateRepresentatives_Corporations">
+            <End Role="Corporations" EntitySet="Corporations" />
+            <End Role="CorporateRepresentatives" EntitySet="CorporateRepresentatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporateRepresentatives_Persons" Association="Self.FK_CorporateRepresentatives_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="CorporateRepresentatives" EntitySet="CorporateRepresentatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporationsPhoneNumbers_Corporations" Association="Self.FK_CorporationsPhoneNumbers_Corporations">
+            <End Role="Corporations" EntitySet="Corporations" />
+            <End Role="CorporationsPhoneNumbers" EntitySet="CorporationsPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonsPhoneNumbers_Persons" Association="Self.FK_PersonsPhoneNumbers_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="PersonsPhoneNumbers" EntitySet="PersonsPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewPetitions_Persons" Association="Self.FK_ReviewPetitions_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="ReviewPetitions" EntitySet="ReviewPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewPetitions_Sales" Association="Self.FK_ReviewPetitions_Sales">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="ReviewPetitions" EntitySet="ReviewPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Users" Association="Self.FK_Sales_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesPetitions_Users" Association="Self.FK_SalesPetitions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SalesPetitions" EntitySet="SalesPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSession_Users" Association="Self.FK_UserSession_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersSession" EntitySet="UsersSession" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TEC_QA_CRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="TEC_QA_CRMEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityType Name="CorporateRepresentative">
+          <Key>
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="CorporationID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="CorporationID" Type="Int32" Nullable="false" />
+          <Property Name="RoleDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Corporation" Relationship="Self.FK_CorporateRepresentatives_Corporations" FromRole="CorporateRepresentatives" ToRole="Corporations" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_CorporateRepresentatives_Persons" FromRole="CorporateRepresentatives" ToRole="Persons" />
+        </EntityType>
+        <EntityType Name="Corporation">
+          <Key>
+            <PropertyRef Name="CorporationID" />
+          </Key>
+          <Property Name="CorporationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CorporateRepresentatives" Relationship="Self.FK_CorporateRepresentatives_Corporations" FromRole="Corporations" ToRole="CorporateRepresentatives" />
+          <NavigationProperty Name="CorporationsPhoneNumbers" Relationship="Self.FK_CorporationsPhoneNumbers_Corporations" FromRole="Corporations" ToRole="CorporationsPhoneNumbers" />
+        </EntityType>
+        <EntityType Name="CorporationsPhoneNumber">
+          <Key>
+            <PropertyRef Name="CorporationID" />
+            <PropertyRef Name="PhoneNumber" />
+          </Key>
+          <Property Name="CorporationID" Type="Int32" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Corporation" Relationship="Self.FK_CorporationsPhoneNumbers_Corporations" FromRole="CorporationsPhoneNumbers" ToRole="Corporations" />
+        </EntityType>
+        <EntityType Name="ErrorReport">
+          <Key>
+            <PropertyRef Name="ErrorID" />
+          </Key>
+          <Property Name="ErrorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="SaleID" Type="Int32" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ErrorDate" Type="DateTime" Precision="0" />
+          <Property Name="ContactMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ErrorDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK__ErrorRepo__SaleI__4222D4EF" FromRole="ErrorReports" ToRole="Sales" />
+          <NavigationProperty Name="User" Relationship="Self.FK__ErrorRepo__UserI__412EB0B6" FromRole="ErrorReports" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CorporateRepresentatives" Relationship="Self.FK_CorporateRepresentatives_Persons" FromRole="Persons" ToRole="CorporateRepresentatives" />
+          <NavigationProperty Name="PersonsPhoneNumbers" Relationship="Self.FK_PersonsPhoneNumbers_Persons" FromRole="Persons" ToRole="PersonsPhoneNumbers" />
+          <NavigationProperty Name="ReviewPetitions" Relationship="Self.FK_ReviewPetitions_Persons" FromRole="Persons" ToRole="ReviewPetitions" />
+        </EntityType>
+        <EntityType Name="PersonsPhoneNumber">
+          <Key>
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="PhoneNumber" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_PersonsPhoneNumbers_Persons" FromRole="PersonsPhoneNumbers" ToRole="Persons" />
+        </EntityType>
+        <EntityType Name="ReviewPetition">
+          <Key>
+            <PropertyRef Name="PetitionID" />
+          </Key>
+          <Property Name="PetitionID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="ReviewDate" Type="DateTime" Nullable="false" Precision="4" />
+          <Property Name="SaleID" Type="Int32" />
+          <Property Name="State" Type="Boolean" />
+          <Property Name="Observations" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_ReviewPetitions_Persons" FromRole="ReviewPetitions" ToRole="Persons" />
+          <NavigationProperty Name="SalesPetition" Relationship="Self.FK_ApprovedPetitions_SalesPetitions" FromRole="ReviewPetitions" ToRole="SalesPetitions" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_ReviewPetitions_Sales" FromRole="ReviewPetitions" ToRole="Sales" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="4" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="ErrorReports" Relationship="Self.FK__ErrorRepo__SaleI__4222D4EF" FromRole="Sales" ToRole="ErrorReports" />
+          <NavigationProperty Name="ReviewPetitions" Relationship="Self.FK_ReviewPetitions_Sales" FromRole="Sales" ToRole="ReviewPetitions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Sales_Users" FromRole="Sales" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="SalesPetition">
+          <Key>
+            <PropertyRef Name="PetitionID" />
+          </Key>
+          <Property Name="PetitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="4" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="ReviewPetition" Relationship="Self.FK_ApprovedPetitions_SalesPetitions" FromRole="SalesPetitions" ToRole="ReviewPetitions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_SalesPetitions_Users" FromRole="SalesPetitions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ErrorReports" Relationship="Self.FK__ErrorRepo__UserI__412EB0B6" FromRole="Users" ToRole="ErrorReports" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Users" FromRole="Users" ToRole="Sales" />
+          <NavigationProperty Name="SalesPetitions" Relationship="Self.FK_SalesPetitions_Users" FromRole="Users" ToRole="SalesPetitions" />
+          <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UserSession_Users" FromRole="Users" ToRole="UsersSession" />
+        </EntityType>
+        <EntityType Name="UsersSession">
+          <Key>
+            <PropertyRef Name="SessionID" />
+          </Key>
+          <Property Name="SessionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ActiveSession" Type="Boolean" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="4" />
+          <Property Name="FinishDate" Type="DateTime" Nullable="false" Precision="4" />
+          <Property Name="SessionIP" Type="Binary" MaxLength="4" FixedLength="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserSession_Users" FromRole="UsersSession" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_CorporateRepresentatives_Corporations">
+          <End Role="Corporations" Type="Self.Corporation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CorporateRepresentatives" Type="Self.CorporateRepresentative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporations">
+              <PropertyRef Name="CorporationID" />
+            </Principal>
+            <Dependent Role="CorporateRepresentatives">
+              <PropertyRef Name="CorporationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporateRepresentatives_Persons">
+          <End Role="Persons" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CorporateRepresentatives" Type="Self.CorporateRepresentative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="CorporateRepresentatives">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporationsPhoneNumbers_Corporations">
+          <End Role="Corporations" Type="Self.Corporation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CorporationsPhoneNumbers" Type="Self.CorporationsPhoneNumber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporations">
+              <PropertyRef Name="CorporationID" />
+            </Principal>
+            <Dependent Role="CorporationsPhoneNumbers">
+              <PropertyRef Name="CorporationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ErrorRepo__SaleI__4222D4EF">
+          <End Role="Sales" Type="Self.Sale" Multiplicity="0..1" />
+          <End Role="ErrorReports" Type="Self.ErrorReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="ErrorReports">
+              <PropertyRef Name="SaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ErrorRepo__UserI__412EB0B6">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="ErrorReports" Type="Self.ErrorReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ErrorReports">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonsPhoneNumbers_Persons">
+          <End Role="Persons" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonsPhoneNumbers" Type="Self.PersonsPhoneNumber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="PersonsPhoneNumbers">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewPetitions_Persons">
+          <End Role="Persons" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="ReviewPetitions" Type="Self.ReviewPetition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="ReviewPetitions">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApprovedPetitions_SalesPetitions">
+          <End Role="SalesPetitions" Type="Self.SalesPetition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReviewPetitions" Type="Self.ReviewPetition" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SalesPetitions">
+              <PropertyRef Name="PetitionID" />
+            </Principal>
+            <Dependent Role="ReviewPetitions">
+              <PropertyRef Name="PetitionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewPetitions_Sales">
+          <End Role="Sales" Type="Self.Sale" Multiplicity="0..1" />
+          <End Role="ReviewPetitions" Type="Self.ReviewPetition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleID" />
+            </Principal>
+            <Dependent Role="ReviewPetitions">
+              <PropertyRef Name="SaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesPetitions_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="SalesPetitions" Type="Self.SalesPetition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SalesPetitions">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSession_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UsersSession" Type="Self.UsersSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersSession">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TEC_QA_CRMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CorporateRepresentatives" EntityType="Self.CorporateRepresentative" />
+          <EntitySet Name="Corporations" EntityType="Self.Corporation" />
+          <EntitySet Name="CorporationsPhoneNumbers" EntityType="Self.CorporationsPhoneNumber" />
+          <EntitySet Name="ErrorReports" EntityType="Self.ErrorReport" />
+          <EntitySet Name="Persons" EntityType="Self.Person" />
+          <EntitySet Name="PersonsPhoneNumbers" EntityType="Self.PersonsPhoneNumber" />
+          <EntitySet Name="ReviewPetitions" EntityType="Self.ReviewPetition" />
+          <EntitySet Name="Sales" EntityType="Self.Sale" />
+          <EntitySet Name="SalesPetitions" EntityType="Self.SalesPetition" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UsersSessions" EntityType="Self.UsersSession" />
+          <AssociationSet Name="FK_CorporateRepresentatives_Corporations" Association="Self.FK_CorporateRepresentatives_Corporations">
+            <End Role="Corporations" EntitySet="Corporations" />
+            <End Role="CorporateRepresentatives" EntitySet="CorporateRepresentatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporateRepresentatives_Persons" Association="Self.FK_CorporateRepresentatives_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="CorporateRepresentatives" EntitySet="CorporateRepresentatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporationsPhoneNumbers_Corporations" Association="Self.FK_CorporationsPhoneNumbers_Corporations">
+            <End Role="Corporations" EntitySet="Corporations" />
+            <End Role="CorporationsPhoneNumbers" EntitySet="CorporationsPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ErrorRepo__SaleI__4222D4EF" Association="Self.FK__ErrorRepo__SaleI__4222D4EF">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="ErrorReports" EntitySet="ErrorReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ErrorRepo__UserI__412EB0B6" Association="Self.FK__ErrorRepo__UserI__412EB0B6">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ErrorReports" EntitySet="ErrorReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonsPhoneNumbers_Persons" Association="Self.FK_PersonsPhoneNumbers_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="PersonsPhoneNumbers" EntitySet="PersonsPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewPetitions_Persons" Association="Self.FK_ReviewPetitions_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="ReviewPetitions" EntitySet="ReviewPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApprovedPetitions_SalesPetitions" Association="Self.FK_ApprovedPetitions_SalesPetitions">
+            <End Role="SalesPetitions" EntitySet="SalesPetitions" />
+            <End Role="ReviewPetitions" EntitySet="ReviewPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewPetitions_Sales" Association="Self.FK_ReviewPetitions_Sales">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="ReviewPetitions" EntitySet="ReviewPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Users" Association="Self.FK_Sales_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesPetitions_Users" Association="Self.FK_SalesPetitions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SalesPetitions" EntitySet="SalesPetitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSession_Users" Association="Self.FK_UserSession_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersSession" EntitySet="UsersSessions" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TEC_QA_CRMModelStoreContainer" CdmEntityContainer="TEC_QA_CRMEntities" />
+        <EntityContainerMapping StorageEntityContainer="TEC_QA_CRMModelStoreContainer" CdmEntityContainer="TEC_QA_CRMEntities">
+          <EntitySetMapping Name="CorporateRepresentatives">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.CorporateRepresentative">
+              <MappingFragment StoreEntitySet="CorporateRepresentatives">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="CorporationID" ColumnName="CorporationID" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Corporations">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.Corporation">
+              <MappingFragment StoreEntitySet="Corporations">
+                <ScalarProperty Name="CorporationID" ColumnName="CorporationID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CorporationsPhoneNumbers">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.CorporationsPhoneNumber">
+              <MappingFragment StoreEntitySet="CorporationsPhoneNumbers">
+                <ScalarProperty Name="CorporationID" ColumnName="CorporationID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErrorReports">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.ErrorReport">
+              <MappingFragment StoreEntitySet="ErrorReports">
+                <ScalarProperty Name="ErrorID" ColumnName="ErrorID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ErrorDate" ColumnName="ErrorDate" />
+                <ScalarProperty Name="ContactMail" ColumnName="ContactMail" />
+                <ScalarProperty Name="ErrorDescription" ColumnName="ErrorDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persons">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.Person">
+              <MappingFragment StoreEntitySet="Persons">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonsPhoneNumbers">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.PersonsPhoneNumber">
+              <MappingFragment StoreEntitySet="PersonsPhoneNumbers">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReviewPetitions">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.ReviewPetition">
+              <MappingFragment StoreEntitySet="ReviewPetitions">
+                <ScalarProperty Name="PetitionID" ColumnName="PetitionID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Observations" ColumnName="Observations" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.Sale">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesPetitions">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.SalesPetition">
+              <MappingFragment StoreEntitySet="SalesPetitions">
+                <ScalarProperty Name="PetitionID" ColumnName="PetitionID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersSessions">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.UsersSession">
+              <MappingFragment StoreEntitySet="UsersSession">
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ActiveSession" ColumnName="ActiveSession" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
+                <ScalarProperty Name="SessionIP" ColumnName="SessionIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -34,7 +816,7 @@
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

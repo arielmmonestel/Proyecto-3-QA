@@ -4,7 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="785afdbff6df4a4a8ba010f850f58184" Name="Diagram1" />
+      <Diagram DiagramId="f4cbd9b00ef246b698dda18ffd1524ad" Name="Diagram1">
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.CorporateRepresentative" Width="1.5" PointX="8.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.Corporation" Width="1.5" PointX="2.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.CorporationsPhoneNumber" Width="1.5" PointX="5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.ErrorReport" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.Person" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.PersonsPhoneNumber" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.ReviewPetition" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.Sale" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.SalesPetition" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.User" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.UsersSession" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_CorporateRepresentatives_Corporations" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_CorporateRepresentatives_Persons" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_CorporationsPhoneNumbers_Corporations" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK__ErrorRepo__SaleI__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK__ErrorRepo__UserI__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_PersonsPhoneNumbers_Persons" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_ReviewPetitions_Persons" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_ApprovedPetitions_SalesPetitions" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_ReviewPetitions_Sales" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_Sales_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_SalesPetitions_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK_UserSession_Users" ManuallyRouted="false" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
