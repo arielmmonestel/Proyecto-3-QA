@@ -63,13 +63,21 @@ namespace Proyecto_3.Controllers
         // GET: ReporteDeErrores
         public ActionResult Index()
         {
-            return View();
+            Session["UserID"] = 14;
+             ViewBag.listaVentas = VentessdeUsuario((int)Session["UserID"]);
+            return PartialView();
         }
         [HttpPost]
         public void RegistrarError(ErrorReport reporte)
         {
             InsertarReporte reporteDB = new InsertarReporte();
             reporteDB.RegistrarDB(reporte);
+        }
+
+        public List<Sale> VentessdeUsuario(int UsuarioID)
+        {
+            TEC_QA_CRMEntities db = new TEC_QA_CRMEntities();
+            return db.Sales.Where(x => x.ClientID == UsuarioID).ToList();
         }
     }
 }
