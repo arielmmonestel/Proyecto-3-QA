@@ -14,6 +14,7 @@ namespace Proyecto_3.Models
     
     public partial class ErrorReport
     {
+        public string errorMessage;
         public int ErrorID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> SaleID { get; set; }

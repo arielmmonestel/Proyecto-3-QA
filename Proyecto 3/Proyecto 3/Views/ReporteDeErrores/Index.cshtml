@@ -1,4 +1,4 @@
-﻿
+﻿@model Proyecto_3.Models.ErrorReport
 @{
     ViewBag.Title = "Index";
 }
@@ -167,14 +167,16 @@
                                     <label for="Contacto">Correo de contacto</label>
                                     <input type="email" class="form-control" id="Contacto" placeholder="Correo al que desea ser contactado" name="ContactMail">
                                 </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input"> ¿El producto esta en garantía?
-                                    </label>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            }
+                                <button type="submit" class="btn btn-primary">Enviar</button>
 
+                                
+                            }
+                            <div class="field-wrap">
+                                <label>
+                                    @Html.DisplayFor(model => model.errorMessage)
+                                </label>
+
+                            </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>

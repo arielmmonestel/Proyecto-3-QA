@@ -1,6 +1,7 @@
 ﻿using Proyecto_3.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -51,9 +52,62 @@ namespace Proyecto_3.Controllers
 
         }
 
+        public static bool EmailEsValido(string emailaddress)
+        {
+            if (emailaddress != null)
+            {
+                try
+                {
+                    var emailAddress = new EmailAddressAttribute();
+                    return emailAddress.IsValid(emailaddress);
+
+                }
+
+                catch (FormatException)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static Boolean ValidarReporte(ErrorReport reporte)
+        {
+            Boolean reporteValido = true;
+            try
+            {
+                if (reporte.SaleID == null || reporte.ProductName == null || reporte.ErrorDate == null || reporte.ContactMail == null || reporte.ErrorDescription == null)
+                {
+                    reporteValido = false;
+                    reporte.errorMessage = "Debe llenar todos los campos";
+                }
+                else if (!EmailEsValido(reporte.ContactMail))
+                {
+                    reporteValido = false;
+                    reporte.errorMessage = "El correo no es valido";
+                }
+            }
+            catch (Exception)
+            {
+
+                reporte.errorMessage = "Debe llenar todos campos";
+            }
+            return reporteValido;
+        }
+
         public Boolean RegistrarDB(ErrorReport reporte)
         {
-            return ErroresDB.InsertarReporte(reporte);
+            if(ValidarReporte(reporte) == true)
+            {
+                return ErroresDB.InsertarReporte(reporte);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
@@ -80,7 +134,6 @@ namespace Proyecto_3.Controllers
             InsertarReporte reporteDB = new InsertarReporte();
             reporteDB.RegistrarDB(reporte);
             return RedirectToAction("TabladeErrores");
-
         }
 
         public List<Sale> VentasdeUsuario(int usuarioID)
@@ -94,5 +147,6 @@ namespace Proyecto_3.Controllers
             TEC_QA_CRMEntities db = new TEC_QA_CRMEntities();
             return db.ErrorReports.Where(x => x.UserID == usuarioID).ToList();
         }
+        
     }
 }
