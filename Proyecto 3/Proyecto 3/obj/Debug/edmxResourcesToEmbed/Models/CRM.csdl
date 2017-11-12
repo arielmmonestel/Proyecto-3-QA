@@ -345,5 +345,18 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="UsersSession" EntitySet="UsersSessions" />
     </AssociationSet>
+    <EntitySet Name="Contact_View" EntityType="TEC_QA_CRMModel.Contact_View" />
   </EntityContainer>
+  <EntityType Name="Contact_View">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Address" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="ClientID" Type="Int32" />
+    <Property Name="SaleID" Type="Int32" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

@@ -63,21 +63,36 @@ namespace Proyecto_3.Controllers
         // GET: ReporteDeErrores
         public ActionResult Index()
         {
-            Session["UserID"] = 14;
-             ViewBag.listaVentas = VentessdeUsuario((int)Session["UserID"]);
+            Session["userID"] = 14;
+            ViewBag.listaVentas = VentasdeUsuario((int)Session["userID"]);
             return PartialView();
         }
+
+        public ActionResult TabladeErrores()
+        {
+            Session["userID"] = 14;
+            ViewBag.listadeErrores = ReportesdeUsuario((int)Session["userID"]);
+            return View();
+        }
         [HttpPost]
-        public void RegistrarError(ErrorReport reporte)
+        public ActionResult RegistrarError(ErrorReport reporte)
         {
             InsertarReporte reporteDB = new InsertarReporte();
             reporteDB.RegistrarDB(reporte);
+            return RedirectToAction("TabladeErrores");
+
         }
 
-        public List<Sale> VentessdeUsuario(int UsuarioID)
+        public List<Sale> VentasdeUsuario(int usuarioID)
         {
             TEC_QA_CRMEntities db = new TEC_QA_CRMEntities();
-            return db.Sales.Where(x => x.ClientID == UsuarioID).ToList();
+            return db.Sales.Where(x => x.ClientID == usuarioID).ToList();
+        }
+
+        public List<ErrorReport> ReportesdeUsuario(int usuarioID)
+        {
+            TEC_QA_CRMEntities db = new TEC_QA_CRMEntities();
+            return db.ErrorReports.Where(x => x.UserID == usuarioID).ToList();
         }
     }
 }

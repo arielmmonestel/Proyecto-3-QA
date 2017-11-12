@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TEC_QA_CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TEC_QA_CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CorporateRepresentatives">
           <Key>
             <PropertyRef Name="PersonID" />
@@ -111,6 +111,20 @@
           <Property Name="StartDate" Type="datetime2" Precision="4" Nullable="false" />
           <Property Name="FinishDate" Type="datetime2" Precision="4" Nullable="false" />
           <Property Name="SessionIP" Type="binary" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TEC_QA_CRM.dbo.Contact_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Contact_View">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="ClientID" Type="int" />
+          <Property Name="SaleID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <Association Name="FK__ErrorRepo__SaleI__4222D4EF">
           <End Role="Sales" Type="Self.Sales" Multiplicity="0..1" />
@@ -278,6 +292,15 @@
           <EntitySet Name="SalesPetitions" EntityType="Self.SalesPetitions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSession" EntityType="Self.UsersSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact_View" EntityType="Self.Contact_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Contact_View].[ClientID] AS [ClientID], 
+    [Contact_View].[SaleID] AS [SaleID], 
+    [Contact_View].[Name] AS [Name], 
+    [Contact_View].[Address] AS [Address], 
+    [Contact_View].[Email] AS [Email]
+    FROM [dbo].[Contact_View] AS [Contact_View]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__ErrorRepo__SaleI__4222D4EF" Association="Self.FK__ErrorRepo__SaleI__4222D4EF">
             <End Role="Sales" EntitySet="Sales" />
             <End Role="ErrorReports" EntitySet="ErrorReports" />
@@ -327,8 +350,7 @@
             <End Role="UsersSession" EntitySet="UsersSession" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TEC_QA_CRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -677,7 +699,20 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersSession" EntitySet="UsersSessions" />
           </AssociationSet>
+          <EntitySet Name="Contact_View" EntityType="TEC_QA_CRMModel.Contact_View" />
         </EntityContainer>
+        <EntityType Name="Contact_View">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="SaleID" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -796,6 +831,17 @@
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
                 <ScalarProperty Name="SessionIP" ColumnName="SessionIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contact_View">
+            <EntityTypeMapping TypeName="TEC_QA_CRMModel.Contact_View">
+              <MappingFragment StoreEntitySet="Contact_View">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

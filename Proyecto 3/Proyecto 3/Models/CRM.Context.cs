@@ -36,5 +36,6 @@ namespace Proyecto_3.Models
         public virtual DbSet<SalesPetition> SalesPetitions { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsersSession> UsersSessions { get; set; }
+        public virtual DbSet<Contact_View> Contact_View { get; set; }
     }
 }

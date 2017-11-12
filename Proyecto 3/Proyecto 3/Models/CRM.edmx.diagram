@@ -28,6 +28,7 @@
         <AssociationConnector Association="TEC_QA_CRMModel.FK_Sales_Users" ManuallyRouted="false" />
         <AssociationConnector Association="TEC_QA_CRMModel.FK_SalesPetitions_Users" ManuallyRouted="false" />
         <AssociationConnector Association="TEC_QA_CRMModel.FK_UserSession_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.Contact_View" Width="1.5" PointX="7.375" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

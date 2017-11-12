@@ -132,6 +132,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\dataTables.bootstrap.css" />
+    <Content Include="css\dataTables.responsive.css" />
+    <Content Include="css\favicon.ico" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\metisMenu.min.css" />
     <Content Include="css\morris.css" />
@@ -152,8 +155,11 @@
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="scripts\dataTables.bootstrap.min.js" />
+    <Content Include="scripts\dataTables.responsive.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="scripts\jquery.dataTables.min.js" />
     <Content Include="scripts\jquery.min.js" />
     <Content Include="scripts\metisMenu.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
@@ -161,13 +167,19 @@
     <Content Include="scripts\morris.min.js" />
     <Content Include="scripts\raphael.min.js" />
     <Content Include="scripts\sb-admin-2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\PuntosDeContactoController.cs" />
     <Compile Include="Controllers\ReporteDeErroresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Contact_View.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CorporateRepresentative.cs">
       <DependentUpon>CRM.tt</DependentUpon>
@@ -240,6 +252,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\ReporteDeErrores\TabladeErrores.cshtml" />
+    <Content Include="Views\PuntosDeContacto\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
