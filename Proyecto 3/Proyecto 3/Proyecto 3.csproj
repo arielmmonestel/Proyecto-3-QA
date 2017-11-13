@@ -175,6 +175,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\PuntosDeContactoController.cs" />
     <Compile Include="Controllers\ReporteDeErroresController.cs" />
+    <Compile Include="Controllers\SeguimientoEntrenamientosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -208,6 +209,12 @@
     <Compile Include="Models\ErrorReport.cs">
       <DependentUpon>CRM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getRelationatedProducts_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getTrainings_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Person.cs">
       <DependentUpon>CRM.tt</DependentUpon>
     </Compile>
@@ -223,10 +230,16 @@
     <Compile Include="Models\SalesPetition.cs">
       <DependentUpon>CRM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Training.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>CRM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersSession.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserXTraining.cs">
       <DependentUpon>CRM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -254,6 +267,7 @@
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\ReporteDeErrores\TabladeErrores.cshtml" />
     <Content Include="Views\PuntosDeContacto\Index.cshtml" />
+    <Content Include="Views\SeguimientoEntrenamientos\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

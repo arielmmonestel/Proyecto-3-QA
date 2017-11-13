@@ -12,13 +12,15 @@ namespace Proyecto_3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CorporateRepresentative
+    public partial class UserXTraining
     {
-        public int PersonID { get; set; }
-        public int CorporationID { get; set; }
-        public string RoleDescription { get; set; }
+        public int userXTrainingID { get; set; }
+        public int fUserID { get; set; }
+        public int fTrainingID { get; set; }
+        public string trainingState { get; set; }
+        public Nullable<int> calification { get; set; }
     
-        public virtual Corporation Corporation { get; set; }
-        public virtual Person Person { get; set; }
+        public virtual Training Training { get; set; }
+        public virtual User User { get; set; }
     }
 }

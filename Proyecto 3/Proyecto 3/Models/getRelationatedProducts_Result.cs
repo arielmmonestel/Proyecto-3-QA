@@ -10,15 +10,13 @@
 namespace Proyecto_3.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class CorporateRepresentative
+    public partial class getRelationatedProducts_Result
     {
-        public int PersonID { get; set; }
-        public int CorporationID { get; set; }
-        public string RoleDescription { get; set; }
-    
-        public virtual Corporation Corporation { get; set; }
-        public virtual Person Person { get; set; }
+        public int TrainingID { get; set; }
+        public string Name { get; set; }
+        public string Duration { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public string MaximumQuota { get; set; }
     }
 }

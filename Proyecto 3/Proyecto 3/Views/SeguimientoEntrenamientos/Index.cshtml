@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    @foreach (var entrenamiento in ViewBag.misEntrenamientos)
+    {
+        <h1>@entrenamiento.StartDate</h1>
+        <h1>@entrenamiento.Duration</h1>
+        <h1>@entrenamiento.Name</h1>
+        <h1>@entrenamiento.trainingState</h1>
+        <h1>@entrenamiento.calification</h1>
+
+
+    }
+
+    @foreach (var producto in ViewBag.misProdRelacionados)
+    {
+        <h1>@producto.StartDate</h1>
+        <h1>@producto.Duration</h1>
+        <h1>@producto.Name</h1>
+        <h1>@producto.MaximumQuota</h1>
+
+    }
+</html>

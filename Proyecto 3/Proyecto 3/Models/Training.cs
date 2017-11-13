@@ -12,25 +12,21 @@ namespace Proyecto_3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Sale
+    public partial class Training
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Sale()
+        public Training()
         {
-            this.ErrorReports = new HashSet<ErrorReport>();
-            this.ReviewPetitions = new HashSet<ReviewPetition>();
+            this.UserXTrainings = new HashSet<UserXTraining>();
         }
     
-        public int SaleID { get; set; }
-        public Nullable<int> ClientID { get; set; }
-        public System.DateTime Date { get; set; }
-        public string Description { get; set; }
-        public decimal Cost { get; set; }
+        public int TrainingID { get; set; }
+        public string Name { get; set; }
+        public string Duration { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public string MaximumQuota { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ErrorReport> ErrorReports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReviewPetition> ReviewPetitions { get; set; }
-        public virtual User User { get; set; }
+        public virtual ICollection<UserXTraining> UserXTrainings { get; set; }
     }
 }

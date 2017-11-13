@@ -29,6 +29,10 @@
         <AssociationConnector Association="TEC_QA_CRMModel.FK_SalesPetitions_Users" ManuallyRouted="false" />
         <AssociationConnector Association="TEC_QA_CRMModel.FK_UserSession_Users" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TEC_QA_CRMModel.Contact_View" Width="1.5" PointX="7.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.Training" Width="1.5" PointX="5.75" PointY="13.75" />
+        <EntityTypeShape EntityType="TEC_QA_CRMModel.UserXTraining" Width="1.5" PointX="8" PointY="5.625" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK__UserXTrai__fTrai__4AB81AF0" />
+        <AssociationConnector Association="TEC_QA_CRMModel.FK__UserXTrai__fUser__49C3F6B7" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

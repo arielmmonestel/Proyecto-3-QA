@@ -118,6 +118,7 @@
     <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Users" FromRole="Users" ToRole="Sales" />
     <NavigationProperty Name="SalesPetitions" Relationship="Self.FK_SalesPetitions_Users" FromRole="Users" ToRole="SalesPetitions" />
     <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UserSession_Users" FromRole="Users" ToRole="UsersSession" />
+    <NavigationProperty Name="UserXTrainings" Relationship="TEC_QA_CRMModel.FK__UserXTrai__fUser__49C3F6B7" FromRole="User" ToRole="UserXTraining" />
   </EntityType>
   <EntityType Name="UsersSession">
     <Key>
@@ -346,6 +347,22 @@
       <End Role="UsersSession" EntitySet="UsersSessions" />
     </AssociationSet>
     <EntitySet Name="Contact_View" EntityType="TEC_QA_CRMModel.Contact_View" />
+    <EntitySet Name="Trainings" EntityType="TEC_QA_CRMModel.Training" />
+    <EntitySet Name="UserXTrainings" EntityType="TEC_QA_CRMModel.UserXTraining" />
+    <AssociationSet Name="FK__UserXTrai__fTrai__4AB81AF0" Association="TEC_QA_CRMModel.FK__UserXTrai__fTrai__4AB81AF0">
+      <End Role="Training" EntitySet="Trainings" />
+      <End Role="UserXTraining" EntitySet="UserXTrainings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserXTrai__fUser__49C3F6B7" Association="TEC_QA_CRMModel.FK__UserXTrai__fUser__49C3F6B7">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserXTraining" EntitySet="UserXTrainings" />
+    </AssociationSet>
+    <FunctionImport Name="getTrainings" ReturnType="Collection(TEC_QA_CRMModel.getTrainings_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="getRelationatedProducts" ReturnType="Collection(TEC_QA_CRMModel.getRelationatedProducts_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Contact_View">
     <Key>
@@ -359,4 +376,65 @@
     <Property Name="Address" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="Training">
+    <Key>
+      <PropertyRef Name="TrainingID" />
+    </Key>
+    <Property Name="TrainingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Duration" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="MaximumQuota" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserXTrainings" Relationship="TEC_QA_CRMModel.FK__UserXTrai__fTrai__4AB81AF0" FromRole="Training" ToRole="UserXTraining" />
+  </EntityType>
+  <EntityType Name="UserXTraining">
+    <Key>
+      <PropertyRef Name="userXTrainingID" />
+    </Key>
+    <Property Name="userXTrainingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fUserID" Type="Int32" Nullable="false" />
+    <Property Name="fTrainingID" Type="Int32" Nullable="false" />
+    <Property Name="trainingState" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="calification" Type="Int32" />
+    <NavigationProperty Name="Training" Relationship="TEC_QA_CRMModel.FK__UserXTrai__fTrai__4AB81AF0" FromRole="UserXTraining" ToRole="Training" />
+    <NavigationProperty Name="User" Relationship="TEC_QA_CRMModel.FK__UserXTrai__fUser__49C3F6B7" FromRole="UserXTraining" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__UserXTrai__fTrai__4AB81AF0">
+    <End Type="TEC_QA_CRMModel.Training" Role="Training" Multiplicity="1" />
+    <End Type="TEC_QA_CRMModel.UserXTraining" Role="UserXTraining" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Training">
+        <PropertyRef Name="TrainingID" />
+      </Principal>
+      <Dependent Role="UserXTraining">
+        <PropertyRef Name="fTrainingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserXTrai__fUser__49C3F6B7">
+    <End Type="TEC_QA_CRMModel.User" Role="User" Multiplicity="1" />
+    <End Type="TEC_QA_CRMModel.UserXTraining" Role="UserXTraining" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserXTraining">
+        <PropertyRef Name="fUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="getTrainings_Result">
+    <Property Type="DateTime" Name="StartDate" Nullable="false" />
+    <Property Type="String" Name="Duration" Nullable="false" MaxLength="300" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="trainingState" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="calification" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getRelationatedProducts_Result">
+    <Property Type="Int32" Name="TrainingID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Duration" Nullable="false" MaxLength="300" />
+    <Property Type="DateTime" Name="StartDate" Nullable="false" />
+    <Property Type="String" Name="MaximumQuota" Nullable="false" MaxLength="10" />
+  </ComplexType>
 </Schema>

@@ -127,5 +127,49 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Trainings">
+      <EntityTypeMapping TypeName="TEC_QA_CRMModel.Training">
+        <MappingFragment StoreEntitySet="Trainings">
+          <ScalarProperty Name="MaximumQuota" ColumnName="MaximumQuota" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TrainingID" ColumnName="TrainingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserXTrainings">
+      <EntityTypeMapping TypeName="TEC_QA_CRMModel.UserXTraining">
+        <MappingFragment StoreEntitySet="UserXTraining">
+          <ScalarProperty Name="calification" ColumnName="calification" />
+          <ScalarProperty Name="trainingState" ColumnName="trainingState" />
+          <ScalarProperty Name="fTrainingID" ColumnName="fTrainingID" />
+          <ScalarProperty Name="fUserID" ColumnName="fUserID" />
+          <ScalarProperty Name="userXTrainingID" ColumnName="userXTrainingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="getTrainings" FunctionName="TEC_QA_CRMModel.Store.getTrainings">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TEC_QA_CRMModel.getTrainings_Result">
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="trainingState" ColumnName="trainingState" />
+          <ScalarProperty Name="calification" ColumnName="calification" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getRelationatedProducts" FunctionName="TEC_QA_CRMModel.Store.getRelationatedProducts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TEC_QA_CRMModel.getRelationatedProducts_Result">
+          <ScalarProperty Name="TrainingID" ColumnName="TrainingID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="MaximumQuota" ColumnName="MaximumQuota" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

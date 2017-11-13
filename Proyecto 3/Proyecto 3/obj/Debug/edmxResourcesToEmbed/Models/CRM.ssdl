@@ -25,6 +25,8 @@
     <Property Name="CorporationID" Type="int" Nullable="false" />
     <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
   </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'TEC_QA_CRM.dbo.ErrorReports' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="ErrorReports">
     <Key>
       <PropertyRef Name="ErrorID" />
@@ -86,6 +88,16 @@
     <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="Cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
   </EntityType>
+  <EntityType Name="Trainings">
+    <Key>
+      <PropertyRef Name="TrainingID" />
+    </Key>
+    <Property Name="TrainingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Duration" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="MaximumQuota" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="UserID" />
@@ -107,8 +119,18 @@
     <Property Name="FinishDate" Type="datetime2" Precision="4" Nullable="false" />
     <Property Name="SessionIP" Type="binary" MaxLength="4" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'TEC_QA_CRM.dbo.Contact_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="UserXTraining">
+    <Key>
+      <PropertyRef Name="userXTrainingID" />
+    </Key>
+    <Property Name="userXTrainingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fUserID" Type="int" Nullable="false" />
+    <Property Name="fTrainingID" Type="int" Nullable="false" />
+    <Property Name="trainingState" Type="nvarchar" MaxLength="100" />
+    <Property Name="calification" Type="int" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'TEC_QA_CRM.dbo.Contact_View' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="Contact_View">
     <Key>
       <PropertyRef Name="Name" />
@@ -121,27 +143,27 @@ warning 6002: The table/view 'TEC_QA_CRM.dbo.Contact_View' does not have a prima
     <Property Name="Address" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
-  <Association Name="FK__ErrorRepo__SaleI__4222D4EF">
-    <End Role="Sales" Type="Self.Sales" Multiplicity="0..1" />
-    <End Role="ErrorReports" Type="Self.ErrorReports" Multiplicity="*" />
+  <Association Name="FK__UserXTrai__fTrai__4AB81AF0">
+    <End Role="Trainings" Type="Self.Trainings" Multiplicity="1" />
+    <End Role="UserXTraining" Type="Self.UserXTraining" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Sales">
-        <PropertyRef Name="SaleID" />
+      <Principal Role="Trainings">
+        <PropertyRef Name="TrainingID" />
       </Principal>
-      <Dependent Role="ErrorReports">
-        <PropertyRef Name="SaleID" />
+      <Dependent Role="UserXTraining">
+        <PropertyRef Name="fTrainingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ErrorRepo__UserI__412EB0B6">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-    <End Role="ErrorReports" Type="Self.ErrorReports" Multiplicity="*" />
+  <Association Name="FK__UserXTrai__fUser__49C3F6B7">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="UserXTraining" Type="Self.UserXTraining" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="UserID" />
       </Principal>
-      <Dependent Role="ErrorReports">
-        <PropertyRef Name="UserID" />
+      <Dependent Role="UserXTraining">
+        <PropertyRef Name="fUserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -275,18 +297,36 @@ warning 6002: The table/view 'TEC_QA_CRM.dbo.Contact_View' does not have a prima
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="getRelationatedProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="getTrainings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="TEC_QA_CRMModelStoreContainer">
     <EntitySet Name="CorporateRepresentatives" EntityType="Self.CorporateRepresentatives" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CorporationsPhoneNumbers" EntityType="Self.CorporationsPhoneNumbers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ErrorReports" EntityType="Self.ErrorReports" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PersonsPhoneNumbers" EntityType="Self.PersonsPhoneNumbers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReviewPetitions" EntityType="Self.ReviewPetitions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SalesPetitions" EntityType="Self.SalesPetitions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trainings" EntityType="Self.Trainings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UsersSession" EntityType="Self.UsersSession" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserXTraining" EntityType="Self.UserXTraining" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ErrorReports" EntityType="Self.ErrorReports" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ErrorReports].[ErrorID] AS [ErrorID], 
+    [ErrorReports].[UserID] AS [UserID], 
+    [ErrorReports].[SaleID] AS [SaleID], 
+    [ErrorReports].[ProductName] AS [ProductName], 
+    [ErrorReports].[ErrorDate] AS [ErrorDate], 
+    [ErrorReports].[ContactMail] AS [ContactMail], 
+    [ErrorReports].[ErrorDescription] AS [ErrorDescription]
+    FROM [dbo].[ErrorReports] AS [ErrorReports]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="Contact_View" EntityType="Self.Contact_View" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [Contact_View].[ClientID] AS [ClientID], 
@@ -296,13 +336,13 @@ warning 6002: The table/view 'TEC_QA_CRM.dbo.Contact_View' does not have a prima
     [Contact_View].[Email] AS [Email]
     FROM [dbo].[Contact_View] AS [Contact_View]</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="FK__ErrorRepo__SaleI__4222D4EF" Association="Self.FK__ErrorRepo__SaleI__4222D4EF">
-      <End Role="Sales" EntitySet="Sales" />
-      <End Role="ErrorReports" EntitySet="ErrorReports" />
+    <AssociationSet Name="FK__UserXTrai__fTrai__4AB81AF0" Association="Self.FK__UserXTrai__fTrai__4AB81AF0">
+      <End Role="Trainings" EntitySet="Trainings" />
+      <End Role="UserXTraining" EntitySet="UserXTraining" />
     </AssociationSet>
-    <AssociationSet Name="FK__ErrorRepo__UserI__412EB0B6" Association="Self.FK__ErrorRepo__UserI__412EB0B6">
+    <AssociationSet Name="FK__UserXTrai__fUser__49C3F6B7" Association="Self.FK__UserXTrai__fUser__49C3F6B7">
       <End Role="Users" EntitySet="Users" />
-      <End Role="ErrorReports" EntitySet="ErrorReports" />
+      <End Role="UserXTraining" EntitySet="UserXTraining" />
     </AssociationSet>
     <AssociationSet Name="FK_ApprovedPetitions_SalesPetitions" Association="Self.FK_ApprovedPetitions_SalesPetitions">
       <End Role="SalesPetitions" EntitySet="SalesPetitions" />
