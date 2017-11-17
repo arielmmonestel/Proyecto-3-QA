@@ -117,15 +117,15 @@ namespace Proyecto_3.Controllers
         // GET: ReporteDeErrores
         public ActionResult Index()
         {
-            Session["userID"] = 14;
-            ViewBag.listaVentas = VentasdeUsuario((int)Session["userID"]);
+            //Session["userID"] = 14;
+            ViewBag.listaVentas = VentasdeUsuario(Convert.ToInt32(Session["UserID"]));
             return PartialView();
         }
 
         public ActionResult TabladeErrores()
         {
-            Session["userID"] = 14;
-            ViewBag.listadeErrores = ReportesdeUsuario((int)Session["userID"]);
+           // Session["userID"] = 14;
+            ViewBag.listadeErrores = ReportesdeUsuario(Convert.ToInt32(Session["UserID"]));
             return View();
         }
         [HttpPost]

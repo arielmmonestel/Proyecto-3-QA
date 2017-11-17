@@ -9,11 +9,12 @@ namespace Proyecto_3.Controllers
 {
     public class PuntosDeContactoController : Controller
     {
-        // GET: PuntosDeContacto
+        [HttpGet]
         public ActionResult Index()
         {
-            Session["userID"] = 14;
-            ViewBag.listaContactos = Contactos((int)Session["userID"]);
+            Session["UserID"] = Convert.ToString(this.Request.QueryString["UserID"]);
+            //Session["UserID"] = 14;
+            ViewBag.listaContactos = Contactos(Convert.ToInt32(Session["UserID"]));
             return View();
         }
 

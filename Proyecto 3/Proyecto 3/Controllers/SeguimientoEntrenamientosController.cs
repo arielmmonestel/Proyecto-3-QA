@@ -9,12 +9,12 @@ namespace Proyecto_3.Controllers
 {
     public class SeguimientoEntrenamientosController : Controller
     {
-        // GET: SeguimientoEntrenamientos
+        [HttpGet]
         public ActionResult Index()
         {
             SeguimientoAEntrenamientos entrenamientos = new SeguimientoAEntrenamientos();
-            ViewBag.misEntrenamientos = entrenamientos.getTrainings(14);
-            ViewBag.misProdRelacionados = entrenamientos.getRelationatedProducts(14);
+            ViewBag.misEntrenamientos = entrenamientos.getTrainings(Convert.ToInt32(Session["UserID"]));
+            ViewBag.misProdRelacionados = entrenamientos.getRelationatedProducts(Convert.ToInt32(Session["UserID"]));
             return PartialView();
         }
 
