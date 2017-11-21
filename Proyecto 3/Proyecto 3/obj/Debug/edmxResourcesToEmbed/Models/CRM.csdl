@@ -363,6 +363,14 @@
     <FunctionImport Name="getRelationatedProducts" ReturnType="Collection(TEC_QA_CRMModel.getRelationatedProducts_Result)">
       <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_Insert_Error_Report">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+      <Parameter Name="SaleID" Mode="In" Type="Int32" />
+      <Parameter Name="Product" Mode="In" Type="String" />
+      <Parameter Name="ErrorDate" Mode="In" Type="DateTime" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Descrition" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Contact_View">
     <Key>

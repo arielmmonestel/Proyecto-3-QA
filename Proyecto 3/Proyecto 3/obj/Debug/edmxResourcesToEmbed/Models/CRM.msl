@@ -171,5 +171,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_Insert_Error_Report" FunctionName="TEC_QA_CRMModel.Store.sp_Insert_Error_Report" />
   </EntityContainerMapping>
 </Mapping>

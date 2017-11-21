@@ -20,8 +20,9 @@ namespace Proyecto_3.Controllers
             try
             {
                 TEC_QA_CRMEntities db = new TEC_QA_CRMEntities();
-                var insert = db.ErrorReports.Add(errorReport);
-                db.SaveChanges();
+                //var insert = db.ErrorReports.Add(errorReport);
+                var insert = db.sp_Insert_Error_Report(errorReport.UserID, errorReport.SaleID, errorReport.ProductName, errorReport.ErrorDate, errorReport.ContactMail, errorReport.ErrorDescription);
+                //db.SaveChanges();
                 if (insert != null)
                 {
                     return true;
@@ -117,14 +118,14 @@ namespace Proyecto_3.Controllers
         // GET: ReporteDeErrores
         public ActionResult Index()
         {
-            //Session["userID"] = 14;
+            Session["userID"] = 14;
             ViewBag.listaVentas = VentasdeUsuario(Convert.ToInt32(Session["UserID"]));
             return PartialView();
         }
 
         public ActionResult TabladeErrores()
         {
-           // Session["userID"] = 14;
+            Session["userID"] = 14;
             ViewBag.listadeErrores = ReportesdeUsuario(Convert.ToInt32(Session["UserID"]));
             return View();
         }
