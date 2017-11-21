@@ -90,7 +90,7 @@
                         <div class="panel-body">
                             @using (Html.BeginForm("RegistrarError", "ReporteDeErrores", FormMethod.Post))
                             {
-                                <input type="hidden" value="14" name="UserID">
+                                <input type="hidden" value=@Session["UserID"] name="UserID">
                                 <div class="form-group">
                                     <label for="NombreProd">Nombre del producto</label>
                                     <input type="text" class="form-control" id="NombreProd" placeholder="Introduzca nombre del producto" name="ProductName">
