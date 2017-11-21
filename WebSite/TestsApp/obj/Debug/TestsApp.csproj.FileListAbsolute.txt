@@ -34,3 +34,19 @@ C:\Users\jason\Downloads\CRM_QA_TEC_2017-master\CRM_QA_TEC_2017-master\WebSite\T
 C:\Users\jason\Downloads\CRM_QA_TEC_2017-master\CRM_QA_TEC_2017-master\WebSite\TestsApp\obj\Debug\TestsApp.csproj.CoreCompileInputs.cache
 C:\Users\jason\Downloads\CRM_QA_TEC_2017-master\CRM_QA_TEC_2017-master\WebSite\TestsApp\obj\Debug\TestsApp.dll
 C:\Users\jason\Downloads\CRM_QA_TEC_2017-master\CRM_QA_TEC_2017-master\WebSite\TestsApp\obj\Debug\TestsApp.pdb
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\TestsApp.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\TestsApp.pdb
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\nunit.framework.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\WebDriver.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\nunit.framework.xml
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\bin\Debug\WebDriver.xml
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\obj\Debug\TestsApp.csprojResolveAssemblyReference.cache
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\obj\Debug\TestsApp.dll
+C:\Users\Luis Alonso\Documents\GitHub\Proyecto-3-QA\WebSite\TestsApp\obj\Debug\TestsApp.pdb
