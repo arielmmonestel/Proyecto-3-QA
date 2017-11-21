@@ -88,10 +88,15 @@
                             </div>
                             <!-- /.row -->
                             <div class="row">
-                                @foreach (var entrenamiento in ViewBag.misEntrenamientos)
+                                @if (ViewBag.misEntrenamientos.Count == 0)
                                 {
-                                    if (entrenamiento.trainingState == "Aprobado")
+                                    <h3>No hay entrenamientos registrados </h3>
+                                }
+                                else {
+                                    foreach (var entrenamiento in ViewBag.misEntrenamientos)
                                     {
+                                        if (entrenamiento.trainingState == "Aprobado")
+                                        {
                                         <div class="col-lg-4">
                                             <div class="panel panel-green">
                                                 <div class="panel-heading">
@@ -168,6 +173,7 @@
                                     }
 
                                 }
+                                }
                                         </div>
 
                             <div class="row">
@@ -178,8 +184,13 @@
                             </div>
                             <!-- /.row -->
                             <div class="row">
-                                
-                                @foreach (var producto in ViewBag.misProdRelacionados)
+
+                                @if (ViewBag.misProdRelacionados.Count == 0)
+                                {
+                                    <h3>No hay productos disponibles </h3>
+                                }
+                                else {
+                                foreach (var producto in ViewBag.misProdRelacionados)
                                 {
                                         <div class="col-lg-4">
                                             <div class="panel panel-info">
@@ -203,7 +214,7 @@
 
                                             </div>
                                         </div>
-                                }
+                                }}
                             </div>
 
 

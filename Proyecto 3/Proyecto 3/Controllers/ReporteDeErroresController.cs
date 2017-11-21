@@ -128,6 +128,7 @@ namespace Proyecto_3.Controllers
             ViewBag.listadeErrores = ReportesdeUsuario(Convert.ToInt32(Session["UserID"]));
             return View();
         }
+
         [HttpPost]
         public ActionResult RegistrarError(ErrorReport reporte)
         {

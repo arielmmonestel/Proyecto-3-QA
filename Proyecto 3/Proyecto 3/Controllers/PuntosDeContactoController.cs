@@ -12,7 +12,11 @@ namespace Proyecto_3.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (this.Request.QueryString["UserID"] != null) { 
             Session["UserID"] = Convert.ToString(this.Request.QueryString["UserID"]);
+
+            Session["Username"] = Convert.ToString(this.Request.QueryString["Username"]);
+            }
             //Session["UserID"] = 14;
             ViewBag.listaContactos = Contactos(Convert.ToInt32(Session["UserID"]));
             return View();

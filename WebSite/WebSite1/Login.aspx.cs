@@ -46,7 +46,8 @@ public partial class _Default : System.Web.UI.Page
                 //segCont.Index();
                 int num = vlogin.getUserID();
                 Session["UserID"] = num;
-               Response.Redirect("http://localhost:4332/PuntosDeContacto/?UserID="+num);
+                Session["Username"] = userName;
+                Response.Redirect("http://localhost:4332/PuntosDeContacto/?UserID="+num+"&Username="+ userName);
                   // Server.Transfer("~/Views/PuntosDeContacto/", true);
                 break;
             case 1:
